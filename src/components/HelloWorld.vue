@@ -1,5 +1,8 @@
 <template>
   <v-container>
+    <span v-on:click="gotolink()">google</span><br />
+    <span @click="gotolinkabout()">about</span><br />
+    <span v-bind:title="message">{{ message }}</span>
     <v-row class="text-center">
       <v-col cols="12">
         <v-img
@@ -9,29 +12,26 @@
           height="200"
         />
       </v-col>
-
+      <span>{{ message01 }}</span
+      ><br />
       <v-col class="mb-4">
         <h1 class="display-2 font-weight-bold mb-3">
-          Welcome to Vuetify
+          Welcome to {{ username }}
         </h1>
+
+        <h2>{{ Boom }}</h2>
 
         <p class="subheading font-weight-regular">
           For help and collaboration with other Vuetify developers,
-          <br>please join our online
-          <a
-            href="https://community.vuetifyjs.com"
-            target="_blank"
-          >Discord Community</a>
+          <br />please join our online
+          <a href="https://community.vuetifyjs.com" target="_blank"
+            >Discord Community</a
+          >
         </p>
       </v-col>
 
-      <v-col
-        class="mb-5"
-        cols="12"
-      >
-        <h2 class="headline font-weight-bold mb-3">
-          What's next?
-        </h2>
+      <v-col class="mb-5" cols="12">
+        <h2 class="headline font-weight-bold mb-3">What's next?</h2>
 
         <v-row justify="center">
           <a
@@ -45,14 +45,13 @@
           </a>
         </v-row>
       </v-col>
-
-      <v-col
-        class="mb-5"
-        cols="12"
-      >
-        <h2 class="headline font-weight-bold mb-3">
-          Important Links
-        </h2>
+      <v-text-field
+        v-model="email"
+        label="Regular"
+        placeholder="Placeholder"
+      ></v-text-field>
+      <v-col class="mb-5" cols="12">
+        <h2 class="headline font-weight-bold mb-3">Important Links</h2>
 
         <v-row justify="center">
           <a
@@ -67,13 +66,8 @@
         </v-row>
       </v-col>
 
-      <v-col
-        class="mb-5"
-        cols="12"
-      >
-        <h2 class="headline font-weight-bold mb-3">
-          Ecosystem
-        </h2>
+      <v-col class="mb-5" cols="12">
+        <h2 class="headline font-weight-bold mb-3">Ecosystem</h2>
 
         <v-row justify="center">
           <a
@@ -93,59 +87,104 @@
 
 <script>
 export default {
-  name: 'HelloWorld',
-
+  name: "HelloWorld",
+  props: {
+    message01: String,
+  },
   data: () => ({
+    email: "",
+    Boom: "",
+    message: new data(),
     ecosystem: [
       {
-        text: 'vuetify-loader',
-        href: 'https://github.com/vuetifyjs/vuetify-loader'
+        text: "vuetify-loader",
+        href: "https://github.com/vuetifyjs/vuetify-loader",
       },
       {
-        text: 'github',
-        href: 'https://github.com/vuetifyjs/vuetify'
+        text: "github",
+        href: "https://github.com/vuetifyjs/vuetify",
       },
       {
-        text: 'awesome-vuetify',
-        href: 'https://github.com/vuetifyjs/awesome-vuetify'
-      }
+        text: "awesome-vuetify",
+        href: "https://github.com/vuetifyjs/awesome-vuetify",
+      },
     ],
+
     importantLinks: [
       {
-        text: 'Documentation',
-        href: 'https://vuetifyjs.com'
+        text: "Documentation",
+        href: "https://vuetifyjs.com",
       },
       {
-        text: 'Chat',
-        href: 'https://community.vuetifyjs.com'
+        text: "Chat",
+        href: "https://community.vuetifyjs.com",
       },
       {
-        text: 'Made with Vuetify',
-        href: 'https://madewithvuejs.com/vuetify'
+        text: "Made with Vuetify",
+        href: "https://madewithvuejs.com/vuetify",
       },
       {
-        text: 'Twitter',
-        href: 'https://twitter.com/vuetifyjs'
+        text: "Twitter",
+        href: "https://twitter.com/vuetifyjs",
       },
       {
-        text: 'Articles',
-        href: 'https://medium.com/vuetify'
-      }
+        text: "Articles",
+        href: "https://medium.com/vuetify",
+      },
     ],
     whatsNext: [
       {
-        text: 'Explore components',
-        href: 'https://vuetifyjs.com/components/api-explorer'
+        text: "Explore components",
+        href: "https://vuetifyjs.com/components/api-explorer",
       },
       {
-        text: 'Select a layout',
-        href: 'https://vuetifyjs.com/getting-started/pre-made-layouts'
+        text: "Select a layout",
+        href: "https://vuetifyjs.com/getting-started/pre-made-layouts",
       },
       {
-        text: 'Frequently Asked Questions',
-        href: 'https://vuetifyjs.com/getting-started/frequently-asked-questions'
-      }
-    ]
-  })
-}
+        text: "Frequently Asked Questions",
+        href: "https://vuetifyjs.com/getting-started/frequently-asked-questions",
+      },
+    ],
+    username: "",
+    text: "",
+  }),
+  created() {
+    // this.Boom = "1234";
+    // this.$EeventBus.$on('Setext', this.Setext);
+    this.getUsername();
+    this.$EventBus.$on("getUsername", this.getUsername);
+  },
+  //data() {
+  //return {
+  //message: "คุณได้เข้าสู่หน้าเว็บเมื่อ" + new Date().toLocaleString(),
+  // };
+  //},
+  methods: {
+    getUsername() {
+      if (localStorage.getItem('username') !== null) {
+        this.username = localStorage.getItem('username')
+      } else {
+        this.username = 'Vuetify'
+      } // gotolink() {
+      //window.location.href('www.google.co.th','_blank')
+      //window.alert("www.google.co.th");
+    },
+    //},
+    //watch: {
+    //email(val) {
+    //console.log("email", val);
+    // },
+    //},
+
+    // gotolinkabout() {
+    //window.location.href('www.google.co.th','_blank')
+    // this.$route.push('/about');
+    //},
+
+    //Setext() {
+    //this.Boom = "Boombaya";
+    //},
+  },
+};
 </script>
